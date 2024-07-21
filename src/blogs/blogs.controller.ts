@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Logger,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -123,7 +124,11 @@ export class BlogsController {
   })
   async findOne(@Param('id', ValidateObjectIdPipe) id: string): Promise<IBlog> {
     this.logger.log(`Received request to fetch blog with id: ${id}`);
-    return this.blogsService.findOne(id);
+    const blog = await this.blogsService.findOne(id);
+    if (!blog) {
+      throw new NotFoundException(`Blog with ID "${id}" not found`);
+    }
+    return blog;
   }
 
   /**

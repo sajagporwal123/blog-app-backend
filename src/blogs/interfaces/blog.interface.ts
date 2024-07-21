@@ -5,5 +5,5 @@ export interface IBlog extends Document {
   readonly content: string;
   readonly createdAt: Date;
   readonly user: string;
-  readonly _id: string;
+  readonly _id?: string;
 }
